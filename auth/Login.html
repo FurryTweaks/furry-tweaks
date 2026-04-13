@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SaaS Login</title>
+
+<link rel="stylesheet" href="login.css">
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+</head>
+
+<body>
+
+<div id="toast"></div>
+
+<!-- BACKDROP -->
+<div id="overlay"></div>
+
+<!-- POPUP -->
+<div id="popup">
+    <p id="popupText"></p>
+</div>
+
+<div class="login-card">
+
+    <h1>Welcome Back</h1>
+    <p class="sub">Login to continue</p>
+
+    <input type="email" id="email" placeholder="Email">
+
+    <div class="password-box">
+        <input type="password" id="password" placeholder="Password">
+        <span class="eye" onclick="togglePassword()">👁</span>
+    </div>
+
+    <button class="login-btn" onclick="login()">Login</button>
+
+    <div class="divider">OR</div>
+
+    <button class="google-btn" onclick="googleLogin()">
+        Continue with Google
+    </button>
+
+    <p class="forgot" onclick="forgotPassword()">Forgot password?</p>
+
+</div>
+
+<script src="login.js"></script>
+
+</body>
+</html>

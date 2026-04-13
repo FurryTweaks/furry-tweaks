@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile Dashboard</title>
+
+<!-- 🔥 CHROME TAB LOGO (FAVICON) -->
+<link rel="icon" type="image/png" href="/assets/images/logo.png">
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: radial-gradient(circle at top,#0f1020,#05060f);
+    font-family:Segoe UI;
+    color:white;
+}
+
+/* CARD */
+.card{
+    width:380px;
+    padding:30px;
+    border-radius:24px;
+    background:rgba(255,255,255,0.06);
+    backdrop-filter:blur(25px);
+    border:1px solid rgba(255,255,255,0.12);
+    text-align:center;
+    box-shadow:0 20px 60px rgba(0,0,0,0.6);
+    position:relative;
+}
+
+/* AVATAR (GOOGLE ONLY) */
+.avatar{
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    margin:auto;
+    background-size:cover;
+    background-position:center;
+    border:2px solid rgba(255,255,255,0.2);
+    box-shadow:0 0 20px rgba(106,92,255,0.25);
+}
+
+/* PLACEHOLDER */
+.placeholder{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    color:#aaa;
+    background:rgba(255,255,255,0.05);
+}
+
+/* TEXT */
+.name{
+    margin-top:12px;
+    font-size:20px;
+    font-weight:600;
+}
+
+.email{
+    font-size:13px;
+    color:#aaa;
+    margin-top:5px;
+}
+
+/* PLAN */
+.badge{
+    margin-top:15px;
+    display:inline-flex;
+    gap:8px;
+    padding:10px 16px;
+    border-radius:14px;
+    font-size:13px;
+}
+
+/* FREE */
+.free{
+    color:#f5c542;
+    background:rgba(245,197,66,0.12);
+}
+
+/* DIAMOND */
+.diamond{
+    color:#4cc3ff;
+    background:rgba(76,195,255,0.12);
+    box-shadow:0 0 15px rgba(76,195,255,0.3);
+}
+
+/* PREMIUM */
+.premium{
+    color:#d9b3ff;
+    background:rgba(160,90,255,0.18);
+    box-shadow:0 0 25px rgba(160,90,255,0.5);
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow{
+    from{box-shadow:0 0 10px rgba(160,90,255,0.3);}
+    to{box-shadow:0 0 30px rgba(160,90,255,0.8);}
+}
+
+/* BUTTON */
+button{
+    width:100%;
+    margin-top:18px;
+    padding:12px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(90deg,#6a5cff,#b845ff);
+    color:white;
+    cursor:pointer;
+}
+
+button:hover{
+    transform:translateY(-2px);
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <!-- AVATAR -->
+    <div id="avatar" class="avatar placeholder">
+        <i class="fa-solid fa-user"></i>
+    </div>
+
+    <!-- USER INFO -->
+    <div class="name" id="name">Loading...</div>
+    <div class="email" id="email">Loading...</div>
+
+    <!-- PLAN -->
+    <div id="plan" class="badge free">
+        <i class="fa-solid fa-coins"></i> FREE USER
+    </div>
+
+    <!-- BACK -->
+    <button onclick="goBack()">Back</button>
+
+</div>
+
+<script>
+/* FIREBASE CONFIG */
+const firebaseConfig = {
+  apiKey: "AIzaSyB3upec-8eK9T5u05lFUFACBz3SReTyH58",
+  authDomain: "furry-tweaks.firebaseapp.com",
+  projectId: "furry-tweaks"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+/* AUTH CHECK */
+auth.onAuthStateChanged((user)=>{
+
+    if(!user){
+        window.location.href="login.html";
+        return;
+    }
+
+    const email = user.email || "";
+    const username = email.split("@")[0];
+
+    document.getElementById("name").innerText = "User : " + username;
+    document.getElementById("email").innerText = "Gmail : " + email;
+
+    /* GOOGLE AVATAR ONLY */
+    const avatar = document.getElementById("avatar");
+
+    if(user.photoURL){
+        avatar.classList.remove("placeholder");
+        avatar.style.backgroundImage = `url(${user.photoURL})`;
+        avatar.innerHTML = "";
+    }
+
+    /* FIRESTORE ROLE */
+    db.collection("users").doc(user.uid)
+    .onSnapshot(doc=>{
+
+        let role = doc.exists && doc.data().plan ? doc.data().plan : "free";
+
+        const plan = document.getElementById("plan");
+        plan.className = "badge";
+
+        if(role === "free"){
+            plan.classList.add("free");
+            plan.innerHTML = `<i class="fa-solid fa-coins"></i> FREE USER`;
+        }
+
+        else if(role === "vip"){
+            plan.classList.add("vip");
+            plan.innerHTML = `<i class="fa-solid fa-gem"></i> vip USER`;
+        }
+
+        else if(role === "premium"){
+            plan.classList.add("premium");
+            plan.innerHTML = `<i class="fa-solid fa-crown"></i> PREMIUM USER`;
+        }
+
+    });
+
+});
+
+/* BACK */
+function goBack(){
+    window.history.back();
+}
+</script>
+
+</body>
+</html>
