@@ -1,0 +1,65 @@
+<link rel="stylesheet" href="/style.css">
+<!-- ================= NAVBAR ================= -->
+<div class="navbar">
+
+    <div class="nav-left">
+        <div class="logo" onclick="goHome()">
+          <img src="/assets/images/logo.png" alt="logo">
+        </div>
+        <div class="nav-title">Furry Utility</div>
+    </div>
+
+    <div class="nav-center">
+        <a href="/pages/download.html">Download</a>
+        <a href="/Pages/premium.html">Premium</a>
+        <a href="/Pages/test.html">How to use</a>
+        <a href="#resources">Resources</a>
+        <a href="#reviews">Reviews</a>
+    </div>
+
+    <div class="nav-right">
+
+        <a href="/auth/login.html" class="login-btn" id="loginBtn">Login</a>
+
+        <div class="user-wrapper" id="userWrapper" style="display:none;">
+            <div class="avatar-ring"></div>
+            <img id="userAvatar" class="user-avatar" onclick="openUserMenu(event)" alt="user">
+        </div>
+
+        <button class="buy-btn">Buy now</button>
+
+    </div>
+</div>
+
+<!-- ================= USER MODAL ================= -->
+<div id="userModal" class="user-modal">
+    <div class="user-box">
+
+        <div class="user-top">
+            <img id="modalAvatar" class="modal-avatar" alt="avatar">
+            <h3>My Account</h3>
+        </div>
+
+        <a href="/auth/Profile.html">Profile</a>
+        <a href="/Payments/Premium.html">Premium</a>
+
+        <button class="danger-btn" onclick="logout()">Logout</button>
+        <button class="close-btn" onclick="closeUserMenu()">Close</button>
+
+    </div>
+</div>
+
+<!-- logout modal -->
+<div id="logoutModal" class="logout-modal">
+    <div class="logout-box">
+
+        <h2>Logout</h2>
+        <p>Are you sure?</p>
+
+        <div class="logout-actions">
+            <button class="cancel-btn" onclick="closeLogoutModal()">Cancel</button>
+            <button class="confirm-btn" onclick="confirmLogout()">Logout</button>
+        </div>
+
+    </div>
+</div>
