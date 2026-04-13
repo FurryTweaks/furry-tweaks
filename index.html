@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Furry Utility</title>
+
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="assets/images/logo.png">
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<script>
+fetch("components/navbar.html")
+  .then(res => res.text())
+  .then(data => {
+      document.getElementById("navbar").innerHTML = data;
+  })
+  .then(() => {
+      // run firebase UI AFTER navbar loads
+      if (window.initUserUI) window.initUserUI();
+  });
+</script>
+
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<div id="navbar"></div>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+
+    <h1 class="hero-title">
+        Furry Tweaks gives you <br>
+        maximum FPS & ultra low latency
+    </h1>
+
+    <button class="download-btn" onclick="downloadTweaker()">
+        Download
+    </button>
+
+    <p class="download-text">
+        Downloads: <span id="downloads">0</span>
+    </p>
+
+    <div class="preview-wrapper">
+        <img src="assets/images/preview.jpg" class="preview-img" alt="preview">
+    </div>
+
+</section>
+
+<!-- ================= PERFORMANCE SECTION ================= -->
+<div class="perf-wrap">
+
+    <div class="perf-header">
+        <h2>Performance Optimization Engine</h2>
+        <p>Real-time system boost simulation comparing Before vs After Furry Tweaks</p>
+    </div>
+
+    <div class="perf-grid">
+
+        <div class="perf-box before">
+            <h3>Before Furry Tweaks</h3>
+
+            <div class="metric"><span>CPU</span><div class="bar"><div id="cpuB" class="fill"></div></div></div>
+            <div class="metric"><span>CPU Usage</span><div class="bar"><div id="cpuUB" class="fill"></div></div></div>
+            <div class="metric"><span>RAM</span><div class="bar"><div id="ramB" class="fill"></div></div></div>
+            <div class="metric"><span>Internet</span><div class="bar"><div id="netB" class="fill"></div></div></div>
+            <div class="metric"><span>FPS</span><div class="bar"><div id="fpsB" class="fill"></div></div></div>
+
+        </div>
+
+        <div class="perf-box after">
+            <h3>After Furry Tweaks</h3>
+
+            <div class="metric"><span>CPU</span><div class="bar"><div id="cpuA" class="fill"></div></div></div>
+            <div class="metric"><span>CPU Usage</span><div class="bar"><div id="cpuUA" class="fill"></div></div></div>
+            <div class="metric"><span>RAM</span><div class="bar"><div id="ramA" class="fill"></div></div></div>
+            <div class="metric"><span>Internet</span><div class="bar"><div id="netA" class="fill"></div></div></div>
+            <div class="metric"><span>FPS</span><div class="bar"><div id="fpsA" class="fill"></div></div></div>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- ================= PING ================= -->
+<div class="ping-container" id="pingBox">
+
+    <div class="ping-title">Network Status</div>
+
+    <div class="ping-value" id="pingValue">91 ms</div>
+
+    <div class="ping-status" id="pingStatus">High Latency</div>
+
+    <!-- SIGNAL LINE -->
+    <div class="signal">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+</div>
+<!-- ================= FEATURES ================= -->
+<div class="feature-card">
+
+    <div class="feature-item">
+        <div class="icon"><i data-lucide="monitor"></i></div>
+        <h3>Supports Windows 10/11</h3>
+        <p>Works with the latest Windows versions for easy setup.</p>
+    </div>
+
+    <div class="feature-item">
+        <div class="icon"><i data-lucide="shield-check"></i></div>
+        <h3>Safe to use</h3>
+        <p>All tweaks are tested and reversible for stability.</p>
+    </div>
+
+    <div class="feature-item">
+        <div class="icon"><i data-lucide="gamepad-2"></i></div>
+        <h3>For every game</h3>
+        <p>Optimized settings ensure smooth performance across all titles.</p>
+    </div>
+
+</div>
+
+<!-- ================= FURRY HEADER ================= -->
+<div class="furry-header">
+
+    <div class="furry-spacer"></div>
+
+    <div class="furry-text">
+        <h1 class="furry-title">Furry Free Tweaks</h1>
+        <p class="furry-subtitle">Optimize your System for FREE</p>
+    </div>
+
+    <button class="free-download-btn">
+        Download for Free
+    </button>
+
+</div>
+
+<!-- ================= AUTO IMAGE SLIDER ================= -->
+<div class="hero-slider">
+
+    <div class="slider-track">
+
+        <div class="slide">
+            <img src="assets/images/preview-pic1.png" alt="slide1">
+        </div>
+
+        <div class="slide">
+            <img src="assets/images/preview-pic2.png" alt="slide2">
+        </div>
+
+        <div class="slide">
+            <img src="assets/images/preview-pic3.png" alt="slide3">
+        </div>
+
+        <!-- duplicate for smooth loop -->
+        <div class="slide">
+            <img src="assets/images/preview-pic1.png" alt="slide1">
+        </div>
+
+        <div class="slide">
+            <img src="assets/images/preview-pic2.png" alt="slide2">
+        </div>
+
+        <div class="slide">
+            <img src="assets/images/preview-pic3.png" alt="slide3">
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================= PREMIUM SECTION ================= -->
+<section class="premium-section">
+
+    <div class="premium-header">
+
+        <div class="premium-text">
+            <h2 class="premium-title">Premium Features</h2>
+            <p class="premium-subtitle">
+                Unlock your PC's Full Potential in this Pro Mode
+            </p>
+        </div>
+
+        <button class="vip-btn">
+            Upgrade to VIP
+        </button>
+
+    </div>
+
+    <div class="premium-slider">
+
+        <div class="premium-track">
+
+            <div class="premium-card">
+                <img src="assets/images/pic1.jpg" alt="p1">
+            </div>
+
+            <div class="premium-card">
+                <img src="assets/images/pic2.jpg" alt="p2">
+            </div>
+
+            <div class="premium-card">
+                <img src="assets/images/pic3.jpg" alt="p3">
+            </div>
+
+            <div class="premium-card">
+                <img src="assets/images/pic4.jpg" alt="p4">
+            </div>
+
+            <!-- duplicate loop -->
+            <div class="premium-card">
+                <img src="assets/images/pic1.jpg" alt="p1">
+            </div>
+
+            <div class="premium-card">
+                <img src="assets/images/pic2.jpg" alt="p2">
+            </div>
+
+            <div class="premium-card">
+                <img src="assets/images/pic3.jpg" alt="p3">
+            </div>
+
+            <div class="premium-card">
+                <img src="assets/images/pic4.jpg" alt="p4">
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================= PRO PREMIUM ================= -->
+<section class="pro-premium">
+
+    <div class="pro-header">
+        <h2>Unlock Your PC’s Full Potential</h2>
+        <p>
+            Upgrade to Furry Premium to completely optimize your PC for maximum FPS and ultra low input delay!
+        </p>
+    </div>
+
+    <div class="pro-grid">
+
+        <div class="pro-card">
+            <i data-lucide="zap"></i>
+            <h3>Completely Optimize Your PC</h3>
+            <p>Unlock over 1,000 safe, but advanced tweaks to optimize every aspect of your system</p>
+        </div>
+
+        <div class="pro-card">
+            <i data-lucide="gamepad-2"></i>
+            <h3>Furry Game Mode</h3>
+            <p>Automatically maximize FPS and responsiveness in real time when gaming</p>
+        </div>
+
+        <div class="pro-card">
+            <i data-lucide="cpu"></i>
+            <h3>BIOS Optimization</h3>
+            <p>Directly Optimize Hardware through BIOS to achieve unmatched performance gains</p>
+        </div>
+
+        <div class="pro-card">
+            <i data-lucide="rocket"></i>
+            <h3>Advanced Features</h3>
+            <p>Access all advanced optimizations included in Furry to take your PC to a new level</p>
+        </div>
+
+        <div class="pro-card">
+            <i data-lucide="wifi"></i>
+            <h3>Network Optimization</h3>
+            <p>Optimize internet with advanced tweaks, adapter tuning, bufferbloat modes and more</p>
+        </div>
+
+        <div class="pro-card">
+            <i data-lucide="headphones"></i>
+            <h3>Priority Support</h3>
+            <p>Get priority assistance from our support team for PC-related issues</p>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ================= VIP CTA ================= -->
+<section class="vip-bottom reveal">
+
+    <h2>Unlock Full Power with Furry Premium</h2>
+
+    <p>
+        Upgrade to VIP and get maximum FPS, ultra-low input delay, and advanced system optimization tools.
+    </p>
+
+    <button class="vip-btn-bottom">
+        Upgrade to VIP
+    </button>
+
+</section>
+
+<div id="footer"></div>
+
+<!-- ================= USER MODAL ================= -->
+<div id="userModal" class="user-modal">
+
+    <div class="user-box">
+
+        <div class="user-top">
+            <img id="modalAvatar" class="modal-avatar" alt="avatar">
+            <h3>My Account</h3>
+        </div>
+
+        <a href="auth/Profile.html">Profile</a>
+        <a href="Payments/Premium.html">Premium</a>
+
+        <button class="danger-btn" onclick="logout()">Logout</button>
+        <button class="close-btn" onclick="closeUserMenu()">Close</button>
+
+    </div>
+
+</div>
+
+<!-- ================= LOGOUT MODAL ================= -->
+<div id="logoutModal" class="logout-modal">
+
+    <div class="logout-box">
+
+        <h2>Logout</h2>
+        <p>Are you sure you want to logout?</p>
+
+        <div class="logout-actions">
+            <button class="cancel-btn" onclick="closeLogoutModal()">Cancel</button>
+            <button class="confirm-btn" onclick="confirmLogout()">Logout</button>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================= SCRIPTS (FIXED W3C ISSUE) ================= -->
+<script src="app.js"></script>
+
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+    lucide.createIcons();
+});
+
+const reveals = document.querySelectorAll(".reveal");
+
+function revealOnScroll() {
+    const windowHeight = window.innerHeight;
+
+    reveals.forEach((el, index) => {
+        const elementTop = el.getBoundingClientRect().top;
+        const elementVisible = 120;
+
+        el.style.transitionDelay = `${index % 6 * 100}ms`;
+
+        if (elementTop < windowHeight - elementVisible) {
+            el.classList.add("active");
+        }
+    });
+}
+
+window.addEventListener("scroll", revealOnScroll);
+window.addEventListener("load", revealOnScroll);
+</script>
+
+<script>
+fetch("/components/Footer.html")
+  .then(res => res.text())
+  .then(html => {
+    document.getElementById("footer").innerHTML = html;
+
+    // optional: re-run auth UI if footer has user elements
+    setTimeout(() => {
+      if (window.refreshAuthUI) {
+        window.refreshAuthUI();
+      }
+    }, 50);
+  });
+</script>
+</body>
+</html>
