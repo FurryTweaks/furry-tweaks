@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Test Page - Furry Utility</title>
+
+<link rel="stylesheet" href="/style.css">
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<!-- MAIN JS -->
+<script src="/app.js" defer></script>
+
+<style>
+body{
+    margin:0;
+    font-family: Arial;
+    background:#0b0f1a;
+    color:white;
+}
+
+/* just to see page works */
+.test-box{
+    margin-top:120px;
+    text-align:center;
+}
+
+.test-box h1{
+    font-size:40px;
+    color:#3dff9a;
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR WILL LOAD HERE -->
+<div id="navbar"></div>
+
+<!-- TEST CONTENT -->
+<div class="test-box">
+    <h1>🔥 TEST PAGE</h1>
+    <p>If navbar + login + avatar works here → system is FIXED</p>
+</div>
+
+<!-- LOAD NAVBAR -->
+<script>
+fetch("/components/navbar.html")
+  .then(res => res.text())
+  .then(html => {
+    document.getElementById("navbar").innerHTML = html;
+
+    // IMPORTANT: rebind Firebase UI after inject
+    setTimeout(() => {
+      if (window.refreshAuthUI) {
+        window.refreshAuthUI();
+      }
+    }, 50);
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Furry Utility</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="/app.js" defer></script>
+<script>
+fetch("/components/navbar.html")
+  .then(res => res.text())
+  .then(html => {
+    document.getElementById("navbar").innerHTML = html;
+
+    // 🔥 FIX: re-bind UI after inject
+    setTimeout(() => {
+      if (window.refreshAuthUI) {
+        window.refreshAuthUI();
+      }
+    }, 50);
+  });
+</script>
+<style>
+
+/* =========================
+   GLOBAL
+========================= */
+body {
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    background: #0a0a12;
+    color: white;
+}
+/* =========================
+   HERO SECTION
+========================= */
+.hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    padding-top: 120px;
+}
+
+/* title */
+.hero h1 {
+    font-size: 42px;
+    margin-bottom: 10px;
+    background: linear-gradient(90deg, #ffffff, #9b7bff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* subtitle */
+.hero p {
+    color: #aaa;
+    font-size: 16px;
+    max-width: 600px;
+    margin-bottom: 30px;
+}
+
+/* download button */
+.download-btn {
+    padding: 14px 28px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+
+    background: linear-gradient(90deg, #6a5cff, #b845ff);
+    color: white;
+    font-size: 16px;
+
+    transition: 0.3s;
+    box-shadow: 0 0 20px rgba(106,92,255,0.5);
+}
+
+.download-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 35px #6a5cff;
+}
+
+/* =========================
+   HERO IMAGE
+========================= */
+.hero-img {
+    margin-top: 70px;
+    width: 480px; /* increased size */
+
+    position: relative;
+
+    animation: float 4s ease-in-out infinite;
+}
+
+/* IMAGE STYLE */
+.hero-img img {
+    width: 100%;
+    border-radius: 25px;
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,0.8),        /* deep shadow */
+        0 0 60px rgba(106,92,255,0.5),      /* main glow */
+        0 0 120px rgba(184,69,255,0.4);     /* outer glow */
+
+    transition: 0.4s ease;
+}
+
+/* HOVER = BIG PREMIUM EFFECT */
+.hero-img:hover img {
+    transform: scale(1.08) rotateX(6deg);
+    box-shadow:
+        0 40px 100px rgba(0,0,0,0.9),
+        0 0 80px rgba(106,92,255,0.7),
+        0 0 160px rgba(184,69,255,0.6);
+}
+
+
+/* floating animation */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+/* =========================
+   SUPPORT SECTION
+========================= */
+.support-section {
+    margin-top: 150px; /* EXACT GAP */
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 90%;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* =========================
+   LEFT SIDE (COOL SAAS PRO)
+========================= */
+.support-left {
+    max-width: 540px;
+    position: relative;
+
+    padding: 35px;
+    border-radius: 28px;
+
+    background: linear-gradient(
+        145deg,
+        rgba(255,255,255,0.05),
+        rgba(255,255,255,0.02)
+    );
+
+    backdrop-filter: blur(25px);
+
+    border: 1px solid rgba(155,123,255,0.15);
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.6),
+        inset 0 0 30px rgba(155,123,255,0.05);
+}
+
+/* 🔥 GLOW BORDER EFFECT */
+.support-left::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: 28px;
+
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(155,123,255,0.4),
+        transparent
+    );
+
+    opacity: 0.4;
+    filter: blur(10px);
+    z-index: -1;
+}
+
+/* =========================
+   TITLE (STRONG + COOL)
+========================= */
+.support-left h2 {
+    font-size: 36px;
+    line-height: 1.2;
+    margin-bottom: 18px;
+
+    background: linear-gradient(90deg, #ffffff, #9b7bff, #6a5cff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    text-shadow: 0 0 20px rgba(155,123,255,0.25);
+}
+
+/* =========================
+   SUBTITLE
+========================= */
+.support-left p {
+    color: #b5b5c5;
+    font-size: 16px;
+    line-height: 1.7;
+
+    margin-bottom: 28px;
+}
+
+/* =========================
+   DISCORD BUTTON (COOL)
+========================= */
+.discord-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 14px 22px;
+    border-radius: 30px;
+    border: none;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    color: white;
+    cursor: pointer;
+
+    background: linear-gradient(135deg, #6a5cff, #9b7bff);
+
+    position: relative;
+    overflow: hidden;
+
+    transition: 0.3s ease;
+
+    box-shadow:
+        0 10px 30px rgba(106,92,255,0.5);
+}
+
+/* ICON */
+.discord-btn img {
+    width: 20px;
+}
+
+/* ✨ SHINE SWEEP */
+.discord-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 120%;
+    height: 100%;
+
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.4),
+        transparent
+    );
+
+    transition: 0.6s;
+}
+
+.discord-btn:hover::before {
+    left: 120%;
+}
+
+/* HOVER */
+.discord-btn:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow:
+        0 20px 50px rgba(106,92,255,0.8);
+}
+
+/* CLICK */
+.discord-btn:active {
+    transform: scale(0.96);
+}
+
+/* RIGHT SIDE */
+.support-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ICON BOX */
+.support-icon {
+    width: 200px;
+    position: relative;
+
+    animation: float 4s ease-in-out infinite;
+}
+
+.support-icon img {
+    width: 100%;
+    border-radius: 20px;
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,0.8),
+        0 0 60px rgba(106,92,255,0.5),
+        0 0 120px rgba(184,69,255,0.4);
+
+    transition: 0.4s ease;
+}
+
+/* HOVER EFFECT */
+.support-icon:hover img {
+    transform: scale(1.1);
+    box-shadow:
+        0 40px 100px rgba(0,0,0,0.9),
+        0 0 90px rgba(106,92,255,0.7),
+        0 0 180px rgba(184,69,255,0.6);
+}
+
+/* GLOW BACKGROUND */
+.support-icon::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 130%;
+    height: 130%;
+    transform: translate(-50%, -50%);
+
+    background: radial-gradient(circle, rgba(106,92,255,0.35), transparent 70%);
+    filter: blur(60px);
+    z-index: -1;
+}
+/* =========================
+   FOOTER BASE
+========================= */
+.premium-footer {
+    margin-top: 150px;
+    padding: 60px 20px 30px;
+    position: relative;
+    color: #fff;
+}
+
+/* =========================
+   MAIN FOOTER GLASS CARD
+========================= */
+.footer-glass.full-footer {
+    max-width: 1200px;
+    margin: auto;
+
+    padding: 30px;
+    border-radius: 30px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+
+    background: linear-gradient(
+        145deg,
+        rgba(255,255,255,0.05),
+        rgba(255,255,255,0.02)
+    );
+
+    border: 1px solid rgba(155,123,255,0.2);
+
+    backdrop-filter: blur(25px);
+
+    box-shadow:
+        0 30px 90px rgba(0,0,0,0.75),
+        inset 0 0 40px rgba(155,123,255,0.05);
+
+    position: relative;
+    overflow: hidden;
+}
+
+/* soft glow background */
+.footer-glass.full-footer::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+
+    background: radial-gradient(
+        circle,
+        rgba(155,123,255,0.18),
+        transparent 60%
+    );
+
+    filter: blur(60px);
+    opacity: 0.7;
+    z-index: 0;
+}
+
+/* keep content above glow */
+.footer-glass.full-footer > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* =========================
+   BRAND TOP SECTION
+========================= */
+.brand-top h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+
+    background: linear-gradient(90deg, #ffffff, #9b7bff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.brand-top p {
+    font-size: 14px;
+    color: #a1a1aa;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+/* CTA BUTTON */
+.brand-top button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 12px 20px;
+    border-radius: 25px;
+    border: none;
+
+    background: linear-gradient(135deg, #6a5cff, #b845ff);
+    color: white;
+
+    font-size: 14px;
+    cursor: pointer;
+
+    box-shadow: 0 10px 30px rgba(106,92,255,0.5);
+
+    transition: 0.3s ease;
+}
+
+.brand-top button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 50px rgba(106,92,255,0.8);
+}
+
+/* =========================
+   INNER GRID (COLUMNS)
+========================= */
+.footer-inner {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+/* COLUMN TITLES */
+.inner-col h3 {
+    font-size: 14px;
+    color: #ddd;
+    margin-bottom: 12px;
+}
+
+/* LINKS */
+.inner-col a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin-bottom: 10px;
+    font-size: 14px;
+
+    color: #aaa;
+    text-decoration: none;
+
+    transition: 0.25s ease;
+}
+
+/* LINK HOVER */
+.inner-col a:hover {
+    color: white;
+    transform: translateX(6px);
+}
+
+/* ICONS */
+.inner-col a i {
+    width: 18px;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* =========================
+   FOOTER BOTTOM
+========================= */
+.footer-bottom {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.footer-bottom p {
+    font-size: 13px;
+    color: #777;
+}
+
+/* =========================
+   RESPONSIVE DESIGN
+========================= */
+@media (max-width: 900px) {
+    .footer-inner {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .footer-inner {
+        grid-template-columns: 1fr;
+    }
+
+    .brand-top {
+        text-align: center;
+    }
+}
+
+/* =========================
+   OPTIONAL MICRO INTERACTIONS
+========================= */
+.inner-col a:hover i {
+    transform: scale(1.2);
+    transition: 0.3s;
+}
+.footer-logo {
+    width: 55px;
+    height: 55px;
+
+    border-radius: 50%;
+    overflow: hidden;
+
+    margin-bottom: 12px;
+
+    border: 1px solid rgba(155,123,255,0.3);
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.5),
+        0 0 20px rgba(155,123,255,0.4);
+
+    transition: 0.3s ease;
+}
+
+.footer-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* hover effect */
+.footer-logo:hover {
+    transform: scale(1.1) rotate(3deg);
+    box-shadow:
+        0 15px 40px rgba(0,0,0,0.6),
+        0 0 30px rgba(155,123,255,0.6);
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<div id="navbar"></div>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+
+    <h1>Optimize your PC for FREE</h1>
+
+    <p>
+        Boost FPS, Decrease Input Delay and Get rid of stutters on Windows 10/11
+    </p>
+
+    <button class="download-btn">Download Furry</button>
+
+    <div class="hero-img">
+        <img src="../assets/images/Preview.jpg" alt="product preview">
+    </div>
+
+</section>
+
+<section class="support-section">
+
+    <!-- LEFT CONTENT -->
+    <div class="support-left">
+
+    <h2>Dedicated support right at your fingertips</h2>
+
+    <p>
+        Our dedicated support team is ready to assist you with any questions,
+        concerns, or technical support you may need.
+    </p>
+
+    <!-- BUTTON NOW AFTER SUBTITLE -->
+    <button class="discord-btn">
+        <img src="../assets/images//discord.png" alt="discord">
+        Join Discord Server
+    </button>
+
+</div>
+
+    <!-- RIGHT ICON -->
+    <div class="support-right">
+        <div class="support-icon">
+            <img src="../assets/images/message.png" alt="support">
+        </div>
+    </div>
+
+</section>
+
+    <!-- INNER GRID -->
+    <div id="footer"></div>
+    
+</body>
+
+<script>
+fetch("/components/Footer.html")
+  .then(res => res.text())
+  .then(html => {
+    document.getElementById("footer").innerHTML = html;
+
+    // optional: re-run auth UI if footer has user elements
+    setTimeout(() => {
+      if (window.refreshAuthUI) {
+        window.refreshAuthUI();
+      }
+    }, 50);
+  });
+</script>
+
+<script>
+auth.onAuthStateChanged(async (user) => {
+
+    const loginBtn = document.getElementById("loginBtn");
+    const userWrapper = document.getElementById("userWrapper");
+    const userAvatar = document.getElementById("userAvatar");
+    const userName = document.getElementById("userName");
+
+    if (user) {
+
+        const uid = user.uid;
+
+        try {
+            const userRef = db.collection("users").doc(uid);
+            const userSnap = await userRef.get();
+
+            if (userSnap.exists) {
+
+                const data = userSnap.data();
+
+                console.log("Firestore Data:", data);
+
+                if (loginBtn) loginBtn.style.display = "none";
+                if (userWrapper) userWrapper.style.display = "flex";
+
+                if (userAvatar) {
+                    userAvatar.src = data.avatar || "/assets/images/logo.png";
+                }
+
+                if (userName) {
+                    userName.innerText = data.name || "User";
+                }
+            }
+
+        } catch (err) {
+            console.error("Firestore error:", err);
+        }
+
+    } else {
+
+        if (loginBtn) loginBtn.style.display = "inline-block";
+        if (userWrapper) userWrapper.style.display = "none";
+    }
+});
+</script>
+</html>

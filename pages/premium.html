@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Furry Utility | Subscription</title>
+
+<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script>
+  emailjs.init("dcDWpZz9zgSbBPwBl");
+</script>
+
+<link rel="stylesheet" href="/style.css">
+<link rel="stylesheet" href="/pages-css/premium.css">
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<script src="/app.js" defer></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<div id="navbar"></div>
+
+<!-- HERO TITLE -->
+<section class="premium-hero">
+    <h1 class="premium-title">
+  Unlock your PC’s Full<br>
+  <span>Potential</span>
+</h1>
+    <p class="premium-sub">
+  <i class="fa-solid fa-gauge-high"></i>
+  Boost FPS & reduce latencyUnlock advanced<br>
+   system optimizations
+</p>
+</section>
+
+<div class="plan-wrapper">
+
+    <!-- DIAMOND -->
+    <div class="plan-card diamond">
+
+        <div class="divider"></div>
+
+        <h2 class="plan-title">
+            <i class="fa-solid fa-gem"></i>VIP 
+        </h2>
+
+        <div class="price">$14.99 <span>/6 months</span></div>
+
+        <div class="divider"></div>
+        <p class="billing">Billed every 6 months</p>
+
+        <div class="features">
+            <div>500+ Optimizations</div>
+            <div>Furry Ai Mode</div>
+            <div>Network Adapter Tuner</div>
+            <div>Advanced Features</div>
+            <div>Priority Customer Support</div>
+            <div>Advanced Tweaks</div>
+            <div>Cool Ui</div>
+            <div>+ All Free Features</div>
+        </div>
+
+        <div class="divider"></div>
+
+        <button class="plan-btn diamond-btn">
+            ✦ Get Diamond
+        </button>
+
+    </div>
+
+
+    <!-- PREMIUM -->
+    <div class="plan-card premium">
+
+        <div class="badge">BEST VALUE</div>
+
+        <div class="divider"></div>
+
+        <h2 class="plan-title">
+            <i class="fa-solid fa-crown"></i>  Premium
+        </h2>
+
+        <div class="price">$39.99 <span>/6 months</span></div>
+
+        <div class="divider"></div>
+        <p class="billing">Billed every 6 months</p>
+
+        <div class="features">
+            <div>1000+ Optimizations</div>
+            <div>EXM Game Mode</div>
+            <div>Network Adapter Tuner</div>
+            <div>Advanced Features</div>
+            <div>Priority Customer Support</div>
+            <div>Advanced tweaks</div>
+            <div>Advanced Cleaner</div>
+            <div>Cool Ui</div>
+            <div>+ All ⚡ Vip Features</div>
+            <div>+ All Free Features</div>
+        </div>
+
+        <div class="divider"></div>
+
+        <button class="plan-btn premium-btn">
+            💎 Get Premium
+        </button>
+
+    </div>
+
+</div>
+<section class="compare-section">
+
+    <h2 class="compare-title">Compare Plans</h2>
+
+    <div class="compare-table">
+
+        <!-- HEADER -->
+        <div class="compare-row header">
+            <div>Features</div>
+            <div>EXM Free</div>
+            <div>EXM Premium</div>
+        </div>
+
+        <!-- TOP FEATURES -->
+        <div class="compare-row">
+            <div>Support / Help</div>
+            <div class="x"></div>
+            <div class="premium-text">Priority</div>
+        </div>
+
+        <div class="compare-row">
+            <div>Smart System Detection</div>
+            <div class="check"></div>
+            <div class="check"></div>
+        </div>
+
+        <div class="compare-row">
+            <div>Quick Fixes</div>
+            <div class="check"></div>
+            <div class="check"></div>
+        </div>
+
+        <div class="compare-row">
+            <div>System Cleaner</div>
+            <div class="check"></div>
+            <div class="check"></div>
+        </div>
+
+        <div class="compare-row">
+            <div>Optimize Apps</div>
+            <div class="check"></div>
+            <div class="check"></div>
+        </div>
+
+        <!-- PREMIUM ONLY -->
+        <div class="compare-row locked">
+            <div>Bufferbloat Presets</div>
+            <div class="x"></div>
+            <div class="check"></div>
+        </div>
+
+        <div class="compare-row locked">
+            <div>Adapter Tuner</div>
+            <div class="x"></div>
+            <div class="check"></div>
+        </div>
+
+        <div class="compare-row locked">
+            <div>EXM Game Mode</div>
+            <div class="x"></div>
+            <div class="check"></div>
+        </div>
+
+        <div class="compare-row locked">
+            <div>Device Optimization</div>
+            <div class="x"></div>
+            <div class="check"></div>
+        </div>
+
+        <div class="compare-row locked">
+            <div>Security Optimizations</div>
+            <div class="x"></div>
+            <div class="check"></div>
+        </div>
+
+        <div class="compare-row locked">
+            <div>Timer Resolution</div>
+            <div class="x"></div>
+            <div class="check"></div>
+        </div>
+
+        <!-- AI -->
+        <div class="compare-row">
+            <div>AI Assistant (Beta)</div>
+            <div class="limited">Limited</div>
+            <div class="premium-text">Unlimited</div>
+        </div>
+
+        <!-- OPTIMIZATION LEVELS -->
+        <div class="compare-row">
+            <div>Windows Optimization</div>
+            <div class="basic">Basic</div>
+            <div class="premium-text">Advanced</div>
+        </div>
+
+        <div class="compare-row">
+            <div>General System Optimization</div>
+            <div class="basic">Basic</div>
+            <div class="premium-text">Advanced</div>
+        </div>
+
+        <div class="compare-row">
+            <div>Power Optimization</div>
+            <div class="basic">Basic</div>
+            <div class="premium-text">Advanced</div>
+        </div>
+
+        <div class="compare-row">
+            <div>Privacy Optimization</div>
+            <div class="basic">Basic</div>
+            <div class="premium-text">Advanced</div>
+        </div>
+
+        <div class="compare-row">
+            <div>GPU Optimization</div>
+            <div class="basic">Basic</div>
+            <div class="premium-text">Advanced</div>
+        </div>
+
+        <div class="compare-row">
+            <div>CPU Optimization</div>
+            <div class="basic">Basic</div>
+            <div class="premium-text">Advanced</div>
+        </div>
+
+        <div class="compare-row">
+            <div>Memory Optimization</div>
+            <div class="basic">Basic</div>
+            <div class="premium-text">Advanced</div>
+        </div>
+
+        <div class="compare-row">
+            <div>Peripheral & USB Optimization</div>
+            <div class="basic">Basic</div>
+            <div class="premium-text">Advanced</div>
+        </div>
+
+        <div class="compare-row">
+            <div>Storage Optimization</div>
+            <div class="basic">Basic</div>
+            <div class="premium-text">Advanced</div>
+        </div>
+
+        <div class="compare-row">
+            <div>Service Reduction</div>
+            <div class="basic">Basic</div>
+            <div class="premium-text">Advanced</div>
+        </div>
+
+        <div class="compare-row">
+            <div>System Debloat</div>
+            <div class="basic">Basic</div>
+            <div class="premium-text">Advanced</div>
+        </div>
+
+        <div class="compare-row">
+            <div>Network Optimization</div>
+            <div class="basic">Basic</div>
+            <div class="premium-text">Advanced</div>
+        </div>
+
+    </div>
+
+</section>
+<section class="faq-section">
+
+    <h2 class="faq-title">Frequently Asked Questions</h2>
+
+    <div class="faq-container">
+
+        <div class="faq-item">
+            <button class="faq-question">
+                What is EXM and how does it work?
+                <span>+</span>
+            </button>
+            <div class="faq-answer">
+                EXM is an advanced Windows optimization tool that improves FPS, reduces input delay, and eliminates system bottlenecks by applying safe, performance-focused tweaks across your system.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                Is EXM safe for my PC?
+                <span>+</span>
+            </button>
+            <div class="faq-answer">
+                Yes. All optimizations are tested and designed specifically for Windows 10 and 11. EXM avoids harmful changes and focuses only on safe performance improvements.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                Will this actually increase FPS?
+                <span>+</span>
+            </button>
+            <div class="faq-answer">
+                Yes. By reducing background processes, optimizing system behavior, and improving latency, EXM can significantly improve FPS stability and responsiveness in games.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                What is the difference between Free and Premium?
+                <span>+</span>
+            </button>
+            <div class="faq-answer">
+                The Free version includes basic optimizations and quick fixes. Premium unlocks advanced system tuning, EXM Game Mode, deeper network optimizations, and full performance control.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                Do I need technical knowledge to use EXM?
+                <span>+</span>
+            </button>
+            <div class="faq-answer">
+                No. EXM is designed to be simple and user-friendly. Most optimizations can be applied with one click, making it accessible for beginners and advanced users.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                Can I undo the changes?
+                <span>+</span>
+            </button>
+            <div class="faq-answer">
+                Yes. EXM includes restore options that allow you to revert changes anytime, ensuring full control and safety.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                Is Premium a one-time purchase or subscription?
+                <span>+</span>
+            </button>
+            <div class="faq-answer">
+                Premium is currently offered as a subscription to ensure continuous updates, new features, and ongoing performance improvements.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                Does EXM work on all PCs?
+                <span>+</span>
+            </button>
+            <div class="faq-answer">
+                Yes. EXM is designed to work on a wide range of systems, from low-end PCs to high-performance gaming setups, adapting optimizations accordingly.
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<div id="footer"></div>
+
+<!-- ================= FINAL PAYMENT SCREEN ================= -->
+<div id="paymentPage" style="display:none; position:fixed; inset:0; background:#0f1020; color:white; z-index:99999; justify-content:center; align-items:center;">
+
+  <div style="background:#1a1b2e; padding:30px; border-radius:15px; width:350px; text-align:center;">
+
+    <h1>Final Payment</h1>
+
+    <p>Plan: <span id="finalPlan"></span></p>
+    <p>Coupon: <span id="finalCoupon"></span></p>
+    <p>Total: $<span id="finalTotal"></span></p>
+
+    <button onclick="fakePay()" style="
+        margin-top:20px;
+        padding:12px;
+        width:100%;
+        border:none;
+        border-radius:10px;
+        background:linear-gradient(120deg,#22c55e,#16a34a);
+        color:white;
+        font-weight:bold;
+        cursor:pointer;">
+        Pay Now
+    </button>
+
+    <button onclick="closePayment()" style="
+        margin-top:10px;
+        padding:10px;
+        width:100%;
+        border:none;
+        border-radius:10px;
+        background:#333;
+        color:white;
+        cursor:pointer;">
+        Back
+    </button>
+
+  </div>
+
+</div>
+
+<!-- ===================== CHECKOUT MODAL POPUP START ===================== -->
+<div id="checkoutPopup" class="checkout-popup">
+
+  <!-- BACKDROP -->
+  <div class="checkout-backdrop" onclick="closeCheckout()"></div>
+
+  <!-- MODAL BOX -->
+  <div class="checkout-box">
+
+    <!-- HEADER -->
+    <h2 class="checkout-title">
+      <i class="fa-solid fa-credit-card"></i>
+      Checkout
+    </h2>
+
+    <!-- COUPON SECTION -->
+    <div class="coupon-box">
+      <i class="fa-solid fa-ticket"></i>
+
+      <input type="text" id="couponInput" placeholder="Coupon code">
+
+      <button onclick="applyCoupon()">
+        Apply
+      </button>
+    </div>
+
+    <!-- DIVIDER -->
+    <div class="divider"></div>
+
+    <!-- PLAN ROW -->
+    <div class="checkout-row">
+      <div class="label">
+        <i class="fa-solid fa-layer-group"></i>
+        Plan
+      </div>
+      <div class="value" id="planName">-</div>
+    </div>
+
+    <!-- EMAIL ROW -->
+    <div class="checkout-row">
+      <div class="label">
+        <i class="fa-solid fa-envelope"></i>
+        Email
+      </div>
+      <div class="value email" id="userEmail">-</div>
+    </div>
+
+    <!-- PRICE ROW -->
+    <div class="checkout-row">
+      <div class="label">
+        <i class="fa-solid fa-tag"></i>
+        Price
+      </div>
+      <div class="value" id="planPrice">$0</div>
+    </div>
+
+    <!-- DIVIDER -->
+    <div class="divider"></div>
+
+    <!-- GRAND TOTAL BOX -->
+    <div class="total-box">
+      <div class="total-title">Grand Total</div>
+
+      <h3>
+        $<span id="grandTotal">0</span>
+      </h3>
+
+      <div class="small-text">
+        Includes 18% GST
+      </div>
+    </div>
+
+    <!-- PAYMENT BUTTON -->
+<button class="pay-btn" onclick="openPaymentScreen()">
+  <i class="fa-solid fa-lock"></i>
+  Proceed to Payment
+</button>
+
+  </div>
+
+</div>
+<div id="mailModal" style="
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.6);
+    justify-content:center;
+    align-items:center;
+    z-index:99999;
+">
+
+  <div style="
+      width:350px;
+      background:#11131f;
+      padding:20px;
+      border-radius:14px;
+      color:white;
+      font-family:Segoe UI;
+  ">
+
+    <h2 style="margin-bottom:10px;">Send Message</h2>
+
+    <input id="mailInput" placeholder="Type your message"
+      style="width:100%;padding:10px;border-radius:8px;border:none;margin-bottom:10px;">
+
+    <button onclick="sendMailMessage()"
+      style="
+        width:100%;
+        padding:10px;
+        border:none;
+        border-radius:8px;
+        background:linear-gradient(120deg,#6c5ce7,#a29bfe);
+        color:white;
+        cursor:pointer;
+      ">
+      Send
+    </button>
+
+    <button onclick="closeMailModal()"
+      style="
+        width:100%;
+        margin-top:8px;
+        padding:8px;
+        border:none;
+        border-radius:8px;
+        background:#333;
+        color:white;
+      ">
+      Close
+    </button>
+
+  </div>
+</div>
+
+<!-- ===================== CHECKOUT MODAL POPUP END ===================== -->
+<script>
+fetch("/components/Footer.html")
+  .then(res => res.text())
+  .then(html => {
+    document.getElementById("footer").innerHTML = html;
+
+    // optional: re-run auth UI if footer has user elements
+    setTimeout(() => {
+      if (window.refreshAuthUI) {
+        window.refreshAuthUI();
+      }
+    }, 50);
+  });
+</script>
+
+<script>
+fetch("/components/navbar.html")
+  .then(res => res.text())
+  .then(html => {
+    document.getElementById("navbar").innerHTML = html;
+
+    // IMPORTANT: rebind Firebase UI after inject
+    setTimeout(() => {
+      if (window.refreshAuthUI) {
+        window.refreshAuthUI();
+      }
+    }, 50);
+  });
+
+</script>
+<script>
+document.querySelectorAll(".faq-question").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+        const item = btn.parentElement;
+        item.classList.toggle("active");
+    });
+});
+</script>
+<script src="/js/premium.js"></script>
+
+<script>
+window.openPaymentScreen = openPaymentScreen;
+window.fakePay = fakePay;
+window.closePayment = closePayment;
+window.applyCoupon = applyCoupon;
+</script>
+</body>
+</html>
